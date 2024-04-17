@@ -1,0 +1,41 @@
+--
+-- Switches iTerm dynamic profile based on screen changes.
+--
+
+local events = require 'events'
+local log = require 'log'
+
+-- 使用 chezmoi 的模板语法来动态定义 iTerm 配置文件的路径和源文件
+local iTermDynamicProfiles = {
+    retina = {
+        {{ range $index, $profile := .iTermDynamicProfiles.retina }}
+        { path = "{{ $profile.path }}", src = "{{ $profile.src }}" },
+        {{ end }}
+    },
+    external = {
+        {{ range $index, $profile := .iTermDynamicProfiles.external }}
+        { path = "{{ $profile.path }}", src = "{{ $profile.src }}" },
+        {{ end }}
+    }
+}
+
+-- 函数声明
+local function switchProfiles(screenCount)
+    if screenCount == 1 or screenCount == 2 then
+        log.i('Configuring iTerm for Retina (internal) display')
+        for _, profile in ipairs(iTermDynamicProfiles.retina) do
+            hs.execute(string.format("ln -sf \"$HOME/Library/Application Support/iTerm2/Sources/%s\" \"$HOME/Library/Application Support/iTerm2/DynamicProfiles/%s\"", profile.src, profile.path))
+        end
+    else
+        log.i('Configuring iTerm for 4K (external) display')
+        for _, profile in ipairs(iTermDynamicProfiles.external) do
+            hs.execute(string.format("ln -sf \"$HOME/Library/Application Support/iTerm2/Sources/%s\" \"$HOME/Library/Application Support/iTerm2/DynamicProfiles/%s\"", profile.src, profile.path))
+        end
+    end
+end
+
+return {
+  init = (function()
+    events.subscribe('layout', switchProfiles)
+  end),
+}

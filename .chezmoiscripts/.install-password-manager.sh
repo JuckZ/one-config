@@ -3,17 +3,14 @@
 script_name=$(basename "$0")
 echo ">>> $script_name is running"
 
-# exit immediately if bw is already in $PATH
-# type bw >/dev/null 2>&1 && exit
-
 case "$(uname -s)" in
 Darwin)
-    brew install bitwarden-cli
-    brew install age
+    type bw >/dev/null 2>&1 || brew install bitwarden-cli
+    type age >/dev/null 2>&1 || brew install age
     ;;
 Linux)
-    pacman -S bitwarden-cli
-    pacman -S age
+    type bw >/dev/null 2>&1 || pacman -S bitwarden-cli
+    type bw >/dev/null 2>&1 || pacman -S age
     # apt install bitwarden-cli # perhaps not exist
     # apt install age
     # yum install ...

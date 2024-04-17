@@ -6,5 +6,8 @@
     "*.yaml.tmpl": "yaml",
     "*.toml.tmpl": "toml",
     "*.zshrc.tmpl": "shellscript"
-  }
+  },
+  "Lua.diagnostics.globals": [
+    "hs"
+  ]
 }
