@@ -1,0 +1,7 @@
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   include ".chezmoitemplates/bash/bashrc_darwin" -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   include ".chezmoitemplates/bash/bashrc_linux" -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{-   include ".chezmoitemplates/bash/bashrc_windows" -}}
+{{- end -}}

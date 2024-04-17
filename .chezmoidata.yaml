@@ -1,0 +1,10 @@
+# fontsDir: .local/share/fonts
+
+terminalFont:
+  fileName: Fira Code Regular Nerd Font Complete Mono.ttf
+  name: FiraCode Nerd Font Mono
+name: Juck
+email: juckz@foxmail.com
+wakatimeItemId: c3b325b0-556d-4204-b67a-b1540022e186
+proxy: localhost:7890
+encrypt: true

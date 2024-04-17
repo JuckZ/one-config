@@ -1,0 +1,13 @@
+[user]
+	name = {{ .name | quote }}
+	email = {{ .email | quote }}
+[safe]
+	directory = D:/
+[http]
+	postBuffer = 1572864000
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = input

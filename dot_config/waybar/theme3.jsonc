@@ -1,0 +1,13 @@
+{
+  "include": ["/home/juck/.config/waybar/config.jsonc"],
+  "modules-left": [
+    "sway/workspaces",
+    "sway/language",
+    "keyboard-state",
+    "custom/pacman",
+    // "custom/mail",
+    "sway/mode"
+  ],
+  "modules-center": ["clock", "custom/weather"],
+  "modules-right": ["pulseaudio", "memory", "backlight", "battery", "tray", "clock#clock2"]
+}

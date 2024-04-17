@@ -1,0 +1,71 @@
+README.md
+
+*.md
+*/*.md
+docs/
+docs/**
+.vscode/
+.vscode/**
+key.txt.age
+
+{{- if ne .encrypt true }}
+.private # ignore the private file
+run_once_before_decrypt-private-key.*
+{{- end }}
+
+{{- if ne .email "juckz@foxmail.com" }}
+.private # note that the pattern is not dot_private
+{{- end }}
+
+{{- if ne .email "work@work.org" }}
+.company
+{{- end }}
+
+{{- if ne .chezmoi.hostname "work-laptop" }}
+.work
+{{- end }}
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+{{- else -}}
+.config/yabai/**
+.config/sketchybar/**
+.config/skhd/**
+.config/svim/**
+{{- end }}
+
+{{ if eq .chezmoi.os "linux" -}}
+
+{{- else -}}
+.gtkrc-2.0.mine
+.config/mako/**
+.config/gtk-3.0/**
+.config/gtk-4.0/**
+.config/rofi/**
+.config/sov/**
+.config/sway/**
+.config/sworkstyle/**
+.config/waybar/**
+.config/wayvnc/**
+.config/wob.ini
+{{- end }}
+
+{{ if eq .chezmoi.os "windows" -}}
+.on-my-zsh/**
+.config/kitty/**
+.config/qt5ct/**
+.chezmoiscripts/**.sh
+.chezmoiscripts/**.sh.tmpl
+{{- else -}}
+.chezmoiscripts/**.ps1
+.chezmoiscripts/**.ps1.tmpl
+AppData/**
+Documents/*PowerShell/**
+.yasb/**
+.glaze-wm/**
+.config/kanata/**
+.config/komokana/**
+.config/komorebi/**
+.config/whkd/**
+.config/scoop/**
+{{- end }}

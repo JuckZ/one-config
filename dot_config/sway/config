@@ -1,0 +1,168 @@
+# styles - set the folder for your theme definition file
+set $theme ~/.config/sway/themes/matcha-green
+
+# theme variables
+include $theme/definitions
+
+# global variables
+include ~/.config/sway/definitions
+
+# user variables
+include $HOME/.config/sway/definitions.d/*.conf
+
+# enable modes
+include ~/.config/sway/modes/*
+
+set $swayscript ~/.config/sway/scripts
+
+# only enable this if every app you use is compatible with wayland
+# xwayland disable
+
+# include additional configs e.g. to autostart applications
+include $HOME/.config/sway/config.d/*.conf
+
+#-----------#
+# WallPaper #
+#-----------#
+# Automatically change wallpapers at intervals
+# exec_always --no-startup-id $swayscript/dynamic_wallpaper.sh
+# exec_always --no-startup-id ~/.config/sway/dynamic_wallpaper.sh
+
+$bindsym $mod+Shift+F5 exec ddcutil setvcp 12 - 10
+$bindsym $mod+Shift+F6 exec ddcutil setvcp 12 + 10
+$bindsym $mod+Ctrl+F5 exec ddcutil setvcp 10 - 10
+$bindsym $mod+Ctrl+F6 exec ddcutil setvcp 10 + 10
+
+# set window transparency
+#exec_always ~/.config/sway/window-transparency.sh
+
+#-----------------------------#
+#           Misc              #
+#-----------------------------#
+#output * adaptive_sync on
+gaps inner 5
+gaps outer 0
+default_border pixel 3
+default_floating_border pixel 3
+#bindsym $mod+shift+g exec swaymsg gaps outer all set 0 && swaymsg gaps inner all set 5 
+#bindsym $mod+g exec swaymsg gaps outer all set 0 && swaymsg gaps inner all set 0
+# Activate smart borders (always)
+smart_borders on
+#smart_gaps on
+
+set $nag exec swaynagmode
+mode "nag" {
+  bindsym {
+    Ctrl+d    mode "default"
+    Ctrl+c    $nag --exit
+    q         $nag --exit
+    Escape    $nag --exit
+    Return    $nag --confirm
+    Tab       $nag --select prev
+    Shift+Tab $nag --select next
+    Left      $nag --select next
+    Right     $nag --select prev
+    Up        $nag --select next
+    Down      $nag --select prev
+  }
+}
+
+# show history with clipboard manager
+$bindsym $mod+Shift+v exec $clipboard
+
+# show zeit tracking
+$bindsym $mod+Shift+z exec $zeit_list
+
+#-------------------------------------------#
+# switch between current and last workspace #
+# slash(/)                                  #
+# Switch to prev/next workspace             #
+# comma(,) period(.)                        #
+#-------------------------------------------#
+bindsym $mod+slash workspace back_and_forth
+bindsym $mod+period workspace next
+bindsym $mod+comma workspace prev
+
+#exec rm -f /tmp/wob && mkfifo /tmp/wob && tail -f /tmp/wob | wob
+#exec rm -f /tmp/wcp && mkfifo /tmp/wcp && tail -f /tmp/wcp | wcp -f 300x190 -m 20 -a rt
+
+# TODO sound equalizer
+exec "sleep 3; easyeffects --gapplication-service"
+
+# TODO vpn toggle hotkey, set or unset proxy env variable
+# middle-key on network module to toggle vpn
+#bindsym $mod+Ctrl+Shift+v exec "date >> /home/juck/out.txt"
+
+
+#---------------------#
+# Focus follows mouse #
+#---------------------#
+#focus_follows_mouse no
+
+#-----------#
+# Autostart #
+#-----------#
+exec_always {
+#  --no-startup-id dunst &
+  --no-startup-id fcitx5 &
+  # ~/.config/sway/scripts/import-gsettings
+  wayvnc --output=HEADLESS-1 --max-fps=10 0.0.0.0 5900 &
+#  --no-startup-id syncthing &
+# sudo pacman -S network-manager-applet
+  --no-startup-id nm-applet --indicator &
+}
+
+#-------------------------------------------------#
+# Control volume,monitor brightness,media players #
+#-------------------------------------------------#
+#bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+#bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+#bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+#bindsym --locked XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+#bindsym --locked XF86MonBrightnessUp exec light -A 5
+#bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+#bindsym --locked XF86MonBrightnessDown exec light -U 5
+#bindsym --locked XF86AudioPlay exec playerctl play-pause
+#bindsym --locked XF86AudioNext exec playerctl next
+#bindsym --locked XF86AudioPrev exec playerctl previous
+
+bindsym $mod+Shift+x exec --no-startup-id        ~/.config/sway/swaylock.sh
+bindsym $mod+q exec --no-startup-id              icalingua --enable-features=UseOzonePlatform --ozone-platform=wayland
+bindsym $mod+bracketleft  exec --no-startup-id   grimshot --notify  save area ~/Pictures/$(date "+%Y-%m-%d"T"%H:%M:%S_no_watermark").png
+bindsym $mod+bracketright exec --no-startup-id   grimshot --notify  copy area 
+bindsym $mod+a exec --no-startup-id             ~/.config/sway/grimshot_watermark.sh
+# Start your launcher
+bindsym $mod+Alt+d exec ~/.config/rofi/launcher.sh
+# Start your powermenu
+bindsym $mod+Alt+l exec ~/.config/rofi/powermenu.sh
+# Move focus the child container
+#bindsym $mod+c focus child
+
+## Better to resize window
+bindsym Shift+Ctrl+h             resize shrink width  5 px or 5 ppt
+bindsym Shift+Ctrl+k             resize grow   height 5 px or 5 ppt
+bindsym Shift+Ctrl+j             resize shrink height 5 px or 5 ppt
+bindsym Shift+Ctrl+l             resize grow   width  5 px or 5 ppt
+bindsym Shift+Ctrl+Left          resize shrink width  5 px or 5 ppt
+bindsym Shift+Ctrl+Up            resize grow   height 5 px or 5 ppt
+bindsym Shift+Ctrl+Down          resize shrink height 5 px or 5 ppt
+bindsym Shift+Ctrl+Right         resize grow   width  5 px or 5 ppt
+
+#--------------------#
+# Idle configuration #
+#--------------------#
+    #exec swayidle -w \
+            #timeout 300 '~/.config/sway/swaylock.sh' \
+            #timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+            #timeout 6 'systemctl suspend' \
+            #before-sleep '~/.config/sway/swaylock.sh'
+
+   # exec swayidle -w \
+   #        timeout 900 'systemctl suspend' \
+   #         before-sleep '~/.config/sway/swaylock.sh'
+
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'playerctl pause' \
+#          before-sleep 'swaylock -f -c 000000'

@@ -1,0 +1,10 @@
+@import "style.css";
+window#waybar {
+  /* color: @wm_icon_bg; */
+  /* background: #24283b; */
+  background: @theme_selected_bg_color;
+}
+#mode {
+  background-color: yellow;
+  border: solid 1px red;
+}

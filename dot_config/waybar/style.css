@@ -1,0 +1,281 @@
+/* :root {
+  --main-text-color: blue;
+} */
+/* Reset all styles */
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-size: 12pt;
+  transition-property: background;
+  transition-duration: 0.5s;
+  margin: 0;
+  padding: 0;
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: 'JetBrainsMono Nerd Font Mono', "JetBrainsMono Nerd Font", "Font Awesome 6 Free", "Font Awesome 6 Brands";;
+  /* font-family: 'JetBrainsMono Nerd Font', 'Hack Nerd Font', 'Roboto Mono', sans-serif; */
+  /* color: var(--main-text-color, yellow); */
+  /* color: @theme_text_color; */
+}
+
+  /* color: white; */
+
+
+window#waybar {
+  background: transparent;
+  /* background: shade(alpha(@borders, 0.9), 1.25); */
+  border-bottom: 1px solid #414868;
+  transition-duration: 0.5s;
+  transition-property: background;
+}
+
+#workspaces button {
+  background: #24283b;
+  color: #c0caf5;
+  /* TODO */
+  border-bottom: 2px solid transparent;
+  padding: 5px;
+  font-size: 18px;
+}
+#workspaces button.focused {
+  background: rgb(181, 232, 224);
+  color: rgb(26, 24, 38);
+}
+#workspaces button.urgent {
+  color: #f7768e;
+}
+#workspaces button.persistent {
+  color: #414868;
+  padding-right: 10px;
+}
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+  transition: none;
+  text-shadow: inherit;
+  border-radius: inherit;
+  box-shadow: inherit;
+  background: rgb(248, 189, 150);
+  color: rgb(26, 24, 38);
+}
+tooltip {
+  background: rgb(48, 45, 65);
+}
+tooltip label {
+  color: rgb(217, 224, 238);
+}
+#custom-launcher {
+  padding: 0 8px;
+  color: rgb(201, 203, 255);
+}
+#backlight,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#custom-cava-internal,
+#custom-clipboard,
+#custom-dnd,
+#custom-github,
+#custom-help,
+#custom-menu,
+#custom-pacman,
+#custom-playerctl,
+#custom-scratchpad,
+#custom-sunset,
+#custom-weather,
+#custom-zeit,
+#disk,
+#idle_inhibitor,
+#keyboard-state,
+#language,
+#memory,
+#mode,
+#mpd,
+#network,
+#pulseaudio,
+#temperature,
+#tray {
+  margin: 0px 2px;
+  padding: 0.2rem 0.6rem;
+}
+
+#custom-wf-recorder {
+  color: @error_color;
+  padding-right: 10px;
+}
+
+#memory {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  color: rgb(181, 232, 224);
+}
+#memory.warning {
+  color: @warning_color;
+}
+#memory.critical {
+  color: @error_color;
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#mode {
+  background: @background_color;
+}
+#cpu {
+  color: rgb(245, 194, 231);
+}
+#clock {
+  font-weight: bold;
+  color: rgb(217, 224, 238);
+}
+#idle_inhibitor {
+  color: rgb(221, 182, 242);
+}
+#temperature {
+  color: rgb(150, 205, 251);
+}
+#backlight {
+  color: rgb(248, 189, 150);
+}
+#pulseaudio {
+  color: rgb(245, 224, 220);
+}
+#pulseaudio.muted {
+  color: @warning_color;
+}
+#bluetooth.disabled {
+  color: @warning_color;
+}
+#network {
+  color: #abe9b3;
+}
+#network.disconnected {
+  color: rgb(255, 255, 255);
+}
+#battery {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#battery.warning {
+  color: @warning_color;
+}
+
+#battery.critical {
+  color: @error_color;
+}
+#battery.warning.discharging {
+  animation-name: blink-warning;
+  animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+#battery.charging,
+#battery.full,
+#battery.discharging {
+  color: rgb(250, 227, 176);
+  /* color: #9ece6a;
+  background: #24283b; */
+}
+#battery.critical:not(.charging) {
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  color: #f7768e;
+  background: #24283b;
+}
+#custom-powermenu {
+  color: rgb(242, 143, 173);
+}
+#tray {
+  padding-right: 8px;
+  padding-left: 10px;
+}
+#mpd.paused {
+  color: #414868;
+  font-style: italic;
+}
+#mpd.stopped {
+  background: transparent;
+}
+#mpd {
+  color: #c0caf5;
+}
+#custom-cava-internal {
+  font-family: 'Hack Nerd Font';
+}
+#custom-pacman {
+  color: @warning_color;
+}
+
+@keyframes blink {
+  to {
+    color: #c0caf5;
+    background: #24283b;
+  }
+}
+@keyframes blink_red {
+  to {
+    background: rgb(242, 143, 173);
+    color: rgb(26, 24, 38);
+  }
+}
+@keyframes blink-warning {
+  70% {
+    color: @wm_icon_bg;
+  }
+
+  to {
+    color: @wm_icon_bg;
+    background: @warning_color;
+  }
+}
+@keyframes blink-critical {
+  70% {
+    color: @wm_icon_bg;
+  }
+
+  to {
+    color: @wm_icon_bg;
+    background: @error_color;
+  }
+}
+
+#custom-zeit.tracking {
+  background: @warning_color;
+}
+
+.warning,
+.critical,
+.urgent {
+  animation-name: blink_red;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#mpd.paused {
+  color: #414868;
+  background: #24283b;
+}
+#mpd.stopped {
+  background: transparent;
+}
+#custom-separator {
+  color: #414868;
+  background: #24283b;
+  border-bottom: 1px solid #414868;
+}
+#idle_inhibitor {
+  color: #b5e8e0;
+}
+#custom-cava-internal {
+  font-family: 'Hack Nerd Font';
+}

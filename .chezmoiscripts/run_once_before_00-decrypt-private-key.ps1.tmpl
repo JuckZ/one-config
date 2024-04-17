@@ -1,0 +1,20 @@
+$script_name = $MyInvocation.MyCommand.Name
+Write-Host ">>> $script_name is running"
+
+# 检查指定文件是否存在
+if (-Not (Test-Path -Path "$HOME/.config/chezmoi/key.txt")) {
+    # 创建目录，如果不存在
+    New-Item -Path "$HOME/.config/chezmoi" -ItemType Directory -Force
+
+    # 使用 chezmoi 解密并输出到文件
+    chezmoi age decrypt --output "$HOME/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/key.txt.age"
+
+    # 修改文件权限，只有当前用户可以读写
+    $acl = Get-Acl "$HOME/.config/chezmoi/key.txt"
+    $acl.SetAccessRuleProtection($true, $false) # 设置文件为 "仅所有者具有访问权限"
+    $rule = New-Object System.Security.AccessControl.FileSystemAccessRule($env:USERNAME, 'Read, Write', 'Allow')
+    $acl.SetAccessRule($rule)
+    Set-Acl -Path "$HOME/.config/chezmoi/key.txt" -AclObject $acl
+}
+
+Write-Host "<<< $script_name finished"

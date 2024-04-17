@@ -1,0 +1,12 @@
+{
+  "include": [
+    "/home/juck/.config/waybar/config.jsonc"
+  ],
+  "modules-left": ["custom/menu", "sway/workspaces", "custom/scratchpad", "custom/pacman#pacman2"],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "clock#clock2"
+  ]
+}

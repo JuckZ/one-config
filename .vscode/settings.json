@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.gitconfig.tmpl": "gitconfig",
+    "*.ps1.tmpl": "powershell",
+    "*.sh.tmpl": "shellscript",
+    "*.yaml.tmpl": "yaml",
+    "*.toml.tmpl": "toml",
+    "*.zshrc.tmpl": "shellscript"
+  }
+}

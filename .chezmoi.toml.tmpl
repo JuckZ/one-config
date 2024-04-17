@@ -1,0 +1,41 @@
+encryption = "age"
+[age]
+    identity = "~/.config/chezmoi/key.txt"
+    recipient = "age1end7wupcuxq4a5g77fuy9gr8zltve397s730sd5vpg6rfu8ah57sm4g4dd"
+{{- if eq .chezmoi.os "windows" }}
+[hooks.read-source-state.pre]
+    command = "powershell"
+    args = [".local/share/chezmoi/.chezmoiscripts/.install-password-manager.ps1"]
+{{- else }}
+[hooks.read-source-state.pre]
+    command = ".local/share/chezmoi/.chezmoiscripts/.install-password-manager.sh"
+{{- end }}
+[edit]
+    command = "code"
+    args = ["-r", "--wait"]
+[interpreters.ps1]
+{{- if eq .chezmoi.os "windows" }}
+    command = "C:/Program Files/PowerShell/7/pwsh.exe"
+{{- else }}
+    command = "/usr/bin/pwsh"
+{{- end }}
+    args = ["-NoLogo", "-NoProfile"]
+[scriptEnv]
+{{- if (and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft")) }}
+  {{- $winUsername := promptStringOnce . "winUsername" "Windows username. We'll attempt to copy SSH keys from its home folder." }}
+  WIN_USERNAME = "{{ $winUsername }}"
+{{- end }}
+
+{{/*
+[hooks.apply.pre]
+    command = ""
+    args = []
+[hooks.apply.post]
+    command = ""
+    args = []
+{{ if eq .chezmoi.os "windows" -}}
+sourceDir: "{{- .chezmoi.workingTree -}}/windows"
+{{ else -}}
+sourceDir: "{{- .chezmoi.workingTree -}}/linux"
+{{ end }}
+*/}}

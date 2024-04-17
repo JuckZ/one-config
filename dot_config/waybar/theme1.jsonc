@@ -1,0 +1,5 @@
+{
+  "include": [
+    "/home/juck/.config/waybar/config.jsonc"
+  ]
+}
