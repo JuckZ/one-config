@@ -190,12 +190,6 @@ source $HOME/.zshrc
 ## Fix for MX Master 3S
 sudo defaults write /Library/Preferences/com.apple.airport.bt.plist bluetoothCoexMgmt Hybrid
 
-# Git
-git config --global user.name Juck
-git config --global user.email juckz@foxmail.com
-git config --global pull.rebase true
-# git config --global credential.help true
-
 # Start Services
 echo "Starting Services (grant permissions)..."
 skhd --start-service

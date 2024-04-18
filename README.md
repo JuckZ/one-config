@@ -4,7 +4,8 @@ Config everything once.
 
 ## TODO
 
-- [ ] 如何组织某些平台运行某些脚本
+- [ ] hyprland的快捷键
+  - [ ] 鼠标和键盘协同resize Command + RButton
 
 ## Features
 
@@ -83,3 +84,8 @@ Generate an age private key encrypted with a passphrase in the file key.txt.age 
 `chezmoi add --encrypt ~/.ssh/id_rsa` 添加加密文件
 
 `chezmoi managed --include encrypted --path-style absolute` 查看所有的加密文件
+
+## Thanks
+
+- [wincent](https://github.com/wincent/wincent)
+- 
