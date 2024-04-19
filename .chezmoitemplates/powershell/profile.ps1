@@ -1,23 +1,42 @@
-# 'Remove-Item Alias:ni -Force -ErrorAction Ignore'
-Set-Alias -Name cz -Value chezmoi
+Import-Module "$($(Get-Item $(Get-Command scoop).Path).Directory.Parent.FullName)\modules\scoop-completion" -ErrorAction SilentlyContinue
 
-$Env:PROJECT_HOME = "$env:USERPROFILE\Documents\projects"
-# set env for komorebi
-$Env:KOMOREBI_CONFIG_HOME = "$env:USERPROFILE\.config\komorebi"
-$Env:WHKD_CONFIG_HOME = "$env:USERPROFILE\.config\whkd"
+# toggle self-elevate
+function toggleSelfElevate {
+    $selfElevate = [System.Environment]::GetEnvironmentVariable("SELF_ELEVATE", [System.EnvironmentVariableTarget]::User)
 
-$Env:SELF_ELEVATE = "false"
-$selfElevate = [System.Convert]::ToBoolean($env:SELF_ELEVATE)
-if($selfElevate) {
-  # Self-elevate the script if required
-  if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
-    if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
-      # you can remove -NoExit from $CommandLine, but then you likely won’t see the output of the elevated script, which will make it more difficult to determine if something went wrong during its execution.
-      $CommandLine = "-NoExit -File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-      Start-Process -Wait -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
-      Exit
+    if($null -ne $selfElevate) {
+        [Environment]::SetEnvironmentVariable("SELF_ELEVATE", $null, [EnvironmentVariableTarget]::User)
+    } else {
+        [Environment]::SetEnvironmentVariable("SELF_ELEVATE", "enable", [EnvironmentVariableTarget]::User)
     }
-  }
+}
+
+# proxy
+function proxyEnable {
+    $proxy = "127.0.0.1:7890"
+    Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -Name ProxyEnable -Value 1
+    Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -Name ProxyServer -Value $proxy
+    Write-Host "全局代理已开启: $proxy"
+}
+function proxyDisable {
+    Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -Name ProxyEnable -Value 0
+    Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -Name ProxyServer -Value ""
+    Write-Host "全局代理已关闭"
+}
+function setProxy {
+    $proxy = "127.0.0.1:7890"
+    # 为当前会话设置代理
+    [Environment]::SetEnvironmentVariable("HTTP_PROXY", $proxy, [EnvironmentVariableTarget]::Process)
+    [Environment]::SetEnvironmentVariable("HTTPS_PROXY", $proxy, [EnvironmentVariableTarget]::Process)
+
+    Write-Host "会话代理已开启: $proxy"
+}
+function unsetProxy {
+    # 清除当前会话的代理设置
+    [Environment]::SetEnvironmentVariable("HTTP_PROXY", $null, [EnvironmentVariableTarget]::Process)
+    [Environment]::SetEnvironmentVariable("HTTPS_PROXY", $null, [EnvironmentVariableTarget]::Process)
+
+    Write-Host "会话代理已关闭"
 }
 
 function Test-IsInteractive {

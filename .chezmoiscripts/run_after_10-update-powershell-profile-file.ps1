@@ -1,7 +1,7 @@
 # This script ensures that the Powershell profile file source-includes the file maintained in chezmoi,
 # i.e. $HOME\.config\powershell\profile.ps1.
 $script_name = $MyInvocation.MyCommand.Name
-Write-Host ">>> $script_name is running"
+Write-Log -Level 'INFO' -Message ">>> {0} is running" -Arguments $script_name
 
 $newLine = [System.Environment]::NewLine;
 
@@ -18,4 +18,5 @@ if (". `"`$HOME\.config\powershell\profile.ps1`";" -notin $contents) {
 	Write-Host "'$($profile.CurrentUserAllHosts)' already includes '`$HOME\.config\powershell\profile.ps1'";
 }
 
-Write-Host "<<< $script_name finished"
+Write-Log -Level 'INFO' -Message "<<< {0} finished" -Arguments $script_name
+Wait-Logging

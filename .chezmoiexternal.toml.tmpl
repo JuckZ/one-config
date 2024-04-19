@@ -22,19 +22,37 @@
     url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     refreshPeriod = "168h"
 {{- end }}
+
 {{- if eq .chezmoi.os "windows" }}
+["Projects/yasb"]
+    type = "archive"
+    url = "https://github.com/da-rth/yasb/archive/refs/heads/main.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
 ["AppData/Roaming/Rime"]
-{{- else if eq .chezmoi.os "darwin" }}
-["Library/Rime"]
-{{- else }}
-[".config/ibus/rime"]
-{{- end }}
     type = "archive"
     url = "https://github.com/hugh7007/xmjd6-rere/archive/refs/heads/main.zip"
     # url = "https://github.com/hugh7007/xmjd6-rere/releases/download/20240412/xmjd6.zip"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+{{- else if eq .chezmoi.os "darwin" }}
+["Library/Rime"]
+    type = "archive"
+    url = "https://github.com/hugh7007/xmjd6-rere/archive/refs/heads/main.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+{{- else }}
+[".config/ibus/rime"]
+    type = "archive"
+    url = "https://github.com/hugh7007/xmjd6-rere/archive/refs/heads/main.zip"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+{{- end }}
+
 {{- if eq .chezmoi.os "not_exist" }}
 [".local/share/navi/cheats/brew.cheat"]
     type = "file"

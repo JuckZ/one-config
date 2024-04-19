@@ -6,11 +6,17 @@ Config everything once.
 
 - [ ] hyprland的快捷键
   - [ ] 鼠标和键盘协同resize Command + RButton
+  - [ ] 任务栏、菜单栏切换
+  - [ ] 配置热重载
+- [ ] proxy从chezmoidata中获取初始值，并赋值给全局，用于各个软件
 
 ## Features
 
 1. [Rime config](https://github.com/hugh7007/xmjd6-rere)
 2. Cross Platform(Linux, macOS, Windows)
+3. toggle self-elevate
+4. useful alias
+5. komo module
 
 ## Usage
 
@@ -19,11 +25,10 @@ Config everything once.
 1. Windows
 
 ```powershell
-scoop bucket add nerd-fonts
-scoop install nerd-fonts/FiraCode-NF
-scoop install nerd-fonts/JetBrainsMono-NF
-scoop install extras/vcredist2022
-scoop install starship
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+winget install --id Microsoft.Powershell --source winget
+iwr -useb get.scoop.sh | iex
+# winget list --name PowerShell --upgrade-available
 scoop install chezmoi
 ```
 
@@ -53,11 +58,6 @@ chezmoi init JuckZ/one-config
 chezmoi init --ssh --depth 1 --apply JuckZ/one-config
 ```
 
-### Install Application
-
-1. [komorebi](./docs/komorebi.md)
-2. [yabai](./docs/yabai.md)
-
 ## Reference
 
 ### chezmoi CLI reference
@@ -73,9 +73,6 @@ chezmoi add
 chezmoi edit
 ```
 
-https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run
-
-
 Generate an age private key encrypted with a passphrase in the file key.txt.age with the command:
 `age-keygen | age --armor --passphrase > key.txt.age`
 
@@ -88,4 +85,3 @@ Generate an age private key encrypted with a passphrase in the file key.txt.age 
 ## Thanks
 
 - [wincent](https://github.com/wincent/wincent)
-- 

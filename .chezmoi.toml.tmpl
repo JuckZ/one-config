@@ -4,11 +4,11 @@ encryption = "age"
     recipient = "age1end7wupcuxq4a5g77fuy9gr8zltve397s730sd5vpg6rfu8ah57sm4g4dd"
 {{- if eq .chezmoi.os "windows" }}
 [hooks.read-source-state.pre]
-    command = "powershell"
-    args = [".local/share/chezmoi/.chezmoiscripts/.install-password-manager.ps1"]
+    command = "pwsh"
+    args = [".local/share/chezmoi/.chezmoiscripts/.install-prerequisite.ps1"]
 {{- else }}
 [hooks.read-source-state.pre]
-    command = ".local/share/chezmoi/.chezmoiscripts/.install-password-manager.sh"
+    command = ".local/share/chezmoi/.chezmoiscripts/.install-prerequisite.sh"
 {{- end }}
 [edit]
     command = "code"

@@ -3,4 +3,6 @@
 #{{ template "powershell/winget.ps1" $func }}
 #{{ end }}
 
-#{{- template "powershell/profile.ps1" . -}}
+#{{ template "powershell/komo.ps1" . }}
+#{{ template "powershell/alias.ps1" . }}
+#{{ template "powershell/self-elevate.ps1" . -}}
