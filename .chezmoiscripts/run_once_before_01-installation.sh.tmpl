@@ -1,0 +1,192 @@
+#!/bin/zsh
+
+source ~/.local/share/chezmoi/.chezmoiscripts/.log.sh
+
+script_name=$(basename "$0")
+log_message "INFO" ">>> $script_name is running"
+
+function extraInstall() {
+  # Anaconda
+  /opt/homebrew/anaconda3/bin/conda init zsh
+  # Python Packages (mainly for data science)
+  echo "Installing Python Packages..."
+  curl https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh | sh
+  source $HOME/.zshrc
+  conda install -c apple tensorflow-deps
+  conda install -c conda-forge pybind11
+  conda install matplotlib
+  conda install jupyterlab
+  conda install seaborn
+  conda install opencv
+  conda install joblib
+  conda install pytables
+  pip install tensorflow-macos
+  pip install tensorflow-metal
+  pip install debugpy
+  pip install sklearn
+}
+
+{{ if eq .chezmoi.os "linux" -}}
+
+function addSource() {
+  # add source for linux
+}
+
+function installApp() {
+  # install
+  # pacman -Sy manjaro-hyprland-settings
+}
+
+{{ else if eq .chezmoi.os "darwin" -}}
+
+function addSource() {
+  brew tap felixkratz/formulae
+  brew tap homebrew/cask-fonts
+  brew tap koekeishiya/formulae
+  brew tap shaunsingh/SFMono-Nerd-Font-Ligaturized
+}
+
+function installApp() {
+  brew bundle --no-lock --file=/dev/stdin <<EOF
+### Reversing
+cask "machoview"
+cask "hex-fiend"
+cask "cutter"
+cask "sloth"
+
+### Development
+brew "dash"
+brew "docker"
+cask "intellij-idea"
+cask "visual-studio-code"
+brew "lazygit"
+brew "gh"
+brew "cmake"
+brew "ccache"
+brew "lua"
+cask "hammerspoon"
+brew "skhd"
+
+### Science
+# brew "mactex"
+# brew "hdf5"
+# brew "gnuplot"
+# brew "texlab"
+
+### Fonts
+cask "sf-symbols"
+cask "font-hack-nerd-font"
+cask "font-sf-mono"
+cask "font-sf-pro"
+cask "font-jetbrains-mono"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+cask "font-sf-mono-nerd-font-ligaturized"
+
+### UI
+cask "monitorcontrol"
+# cask "dockmate"
+cask "swiftbar"
+# cask "pock"
+cask "stats"
+cask "alt-tab"
+brew "sketchybar"
+brew "svim"
+brew "borders"
+brew "yabai"
+
+### App
+cask "raycast"
+cask "todesk"
+cask "snipaste"
+cask "google-chrome"
+# cask "firefox"
+# cask "orion"
+cask "qq"
+cask "wechat"
+cask "squirrel"
+
+### Network
+cask "downie"
+# brew "lulu"
+cask "little-snitch"
+brew "wireguard-go"
+# cask "sfm"  # Download sing-box (macOS standalone version) or from [App Store](https://apps.apple.com/us/app/sing-box/id6451272673)
+
+### Misc
+cask "geekbench"
+cask "karabiner-elements"
+cask "keycastr" # 替代品 Keyviz
+cask "unlox"
+
+### Office
+cask "wpsoffice"
+# cask "libreoffice"
+# cask "dingtalk"
+cask "feishu"
+# cask "inkscape"
+cask "meetingbar"
+
+### Media
+cask "vlc"
+cask "obs"
+cask "qqmusic"
+cask "youku"
+brew "switchaudio-osx"
+brew "nowplaying-cli"
+
+### VM
+cask "virtualbox"
+cask "parsec"
+
+### OS
+# cask "paragon-ntfs"
+# cask "balenaetcher"
+# cask "opencore-configurator"
+# cask "opencore-patcher"
+
+### Terminal
+brew "zsh-autosuggestions"
+# brew "zsh-fast-syntax-highlighting"
+brew "zsh-syntax-highlighting"
+brew "starship"
+cask "iterm2"
+brew "helix"
+brew "zoxide"
+brew "nnn" 
+brew "ranger"
+cask "kitty"
+cask "alacritty"
+brew "neovim"
+brew "jq"
+brew "btop"
+brew "ripgrep"
+brew "mas"
+brew "wget"
+EOF
+
+  # SbarLua
+  SbarLuaLib="~/.local/share/sketchybar_lua/sketchybar.so"
+  if test -f "$SbarLuaLib"; then
+    log_message "INFO" "SbarLuaLib exists."
+  else
+    (git clone https://github.com/FelixKratz/SbarLua.git /tmp/SbarLua && cd /tmp/SbarLua/ && make install && rm -rf /tmp/SbarLua/)
+  fi
+
+  # Fonts
+  curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.17/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
+
+  # Mac App Store Apps
+  echo "Installing Mac App Store Apps..."
+  mas install 497799835 #Xcode
+  # mas install 1451685025 #Wireguard
+  # mas install 1480933944 #Vimari
+}
+
+{{ end -}}
+
+addSource
+installApp
+# extraInstall
+
+log_message "INFO" "<<< $script_name finished"

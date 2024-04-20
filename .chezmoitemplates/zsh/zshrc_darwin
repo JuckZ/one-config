@@ -13,7 +13,7 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
-alias ez='chezmoi'
+alias cz='chezmoi'
 
 # Source zsh plugins
 #source $(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
@@ -29,6 +29,26 @@ eval "$(zoxide init --cmd cd zsh)"
 #source "$HOME/.cargo/env"
 export EDITOR="$(which vim)"
 export VISUAL="$(which vim)"
+
+function toggleYabaiService() {
+  if pgrep -x "yabai" >/dev/null; then
+    # skhd --stop-service
+    killall Hammerspoon
+    yabai --stop-service
+    brew services stop sketchybar
+    brew services stop borders
+    brew services stop svim
+  else
+    # skhd --start-service
+    open -a Hammerspoon
+    yabai --start-service
+    brew services start sketchybar # Run the bar automatically at startup
+    brew services start borders    # Run borders automatically at startup
+    brew services start svim       # Run svim automatically at startup
+  fi
+}
+
+alias yab='toggleYabaiService'
 
 # export http_proxy=127.0.0.1:7890
 # export https_proxy=127.0.0.1:7890

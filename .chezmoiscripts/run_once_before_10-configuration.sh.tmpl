@@ -1,0 +1,90 @@
+#!/bin/zsh
+
+source ~/.local/share/chezmoi/.chezmoiscripts/.log.sh 
+
+script_name=$(basename "$0")
+log_message "INFO" ">>> $script_name is running"
+
+{{ if eq .chezmoi.os "linux" -}}
+
+function setEnv() {
+  # set env
+}
+
+{{ else if eq .chezmoi.os "darwin" -}}
+
+function setDock() {
+  defaults write com.apple.dock autohide -bool true
+  defaults write com.apple.dock autohide-delay -float 1000
+  defaults write com.apple.dock no-bouncing -bool TRUE
+  killall Dock
+}
+
+function setMenuBar() {
+  defaults write NSGlobalDomain _HIHideMenuBar -bool true
+}
+
+function setFinder() {
+  defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+  defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+  defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+  defaults write com.apple.Finder AppleShowAllFiles -bool true
+  defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+  defaults write com.apple.finder ShowStatusBar -bool false
+  defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+}
+
+function setEnv() {
+  # 禁用自动休眠:这是休眠的一种形式
+  # 禁用powernap:用于定期唤醒机器以进行网络和更新(但不包括显示)
+  # 禁用待机:用于睡眠和进入休眠之间的一段时间
+  # 禁用iPhone/手表唤醒功能:特别是当你的iPhone或苹果手表靠近时，机器将唤醒
+  # 关闭TCP保持激活机制，防止每2小时唤醒一次
+  sudo pmset autopoweroff 0
+  sudo pmset powernap 0
+  sudo pmset standby 0
+  sudo pmset proximitywake 0
+  sudo pmset tcpkeepalive 0
+
+  # 关闭鼠标自然滚动
+  defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+  # setDock
+
+  setMenuBar
+
+  setFinder
+
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+  defaults write -g NSWindowShouldDragOnGesture YES
+  ## Fix for MX Master 3S
+  sudo defaults write /Library/Preferences/com.apple.airport.bt.plist bluetoothCoexMgmt Hybrid
+
+  setYabai
+
+}
+
+# 根据官方命令，改写为幂等的等价命令
+function setYabai() {
+  yabai_path=$(which yabai)
+  yabai_hash=$(shasum -a 256 $yabai_path | cut -d " " -f 1)
+  sudoers_entry="$(whoami) ALL=(root) NOPASSWD: sha256:$yabai_hash $yabai_path --load-sa"
+
+  # 检查该条目是否已存在
+  sudoers_file="/private/etc/sudoers.d/yabai"
+  if ! sudo grep -qF -- "$sudoers_entry" "$sudoers_file"; then
+    echo "Adding new entry to sudoers file for yabai."
+    echo "$sudoers_entry" | sudo tee -a "$sudoers_file" >/dev/null
+  else
+    echo "Entry already exists in sudoers file for yabai."
+  fi
+}
+
+{{ end -}}
+
+setEnv
+
+log_message "INFO" "<<< $script_name finished"

@@ -9,6 +9,7 @@ Config everything once.
   - [ ] 任务栏、菜单栏切换
   - [ ] 配置热重载
 - [ ] proxy从chezmoidata中获取初始值，并赋值给全局，用于各个软件
+- [ ] 软件区分必要和额外
 
 ## Features
 
@@ -41,8 +42,16 @@ sudo pacman -S chezmoi
 3. MacOS
 
 ```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew analytics off
 brew install chezmoi
+#(optional) Disable SIP for advanced yabai features.
+csrutil disable
 ```
+
+#### Note
+
+> macOS中，很多应用的权限需要手动在图形化界面中点击授权，因此首次安装后很有可能需要手动操作才能看到期望的效果
 
 ### Pre
 

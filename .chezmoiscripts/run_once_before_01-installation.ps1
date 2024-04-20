@@ -19,7 +19,7 @@ initLogger
 
 Write-Host ">>> $script_name is running"
 
-function local:addBucket() {
+function local:addSource() {
   $BucketList = @(
     "extras",
     "nerd-fonts",
@@ -94,7 +94,7 @@ function local:extraInstall() {
   cd ~/Projects/yasb && pip install -r requirements.txt && cd -
 }
 
-addBucket
+addSource
 installApp
 # extraInstall
 

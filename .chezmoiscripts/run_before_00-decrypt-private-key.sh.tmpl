@@ -1,13 +1,14 @@
-#!/bin/sh
+#!/bin/zsh
+
+source ~/.local/share/chezmoi/.chezmoiscripts/.log.sh 
 
 script_name=$(basename "$0")
-echo ">>> $script_name is running"
+log_message "INFO" ">>> $script_name is running"
 
 if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
     mkdir -p "${HOME}/.config/chezmoi"
     chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/key.txt.age"
     chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi
-EOF
 
-echo "<<< $script_name finished"
+log_message "INFO" "<<< $script_name finished"
