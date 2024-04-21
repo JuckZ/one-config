@@ -8,18 +8,3 @@ email: juckz@foxmail.com
 wakatimeItemId: c3b325b0-556d-4204-b67a-b1540022e186
 proxy: localhost:7890
 encrypt: true
-iTermDynamicProfiles:
-  retina:
-    - path: "Mutt.json"
-      src: "40-Mutt-4K.json"
-    - path: "Vim.json"
-      src: "70-Vim-4K.json"
-    - path: "Wincent.json"
-      src: "10-4K.json"
-  external:
-    - path: "Mutt.json"
-      src: "40-Mutt-Retina.json"
-    - path: "Vim.json"
-      src: "70-Vim-Retina.json"
-    - path: "Wincent.json"
-      src: "10-Retina.json"

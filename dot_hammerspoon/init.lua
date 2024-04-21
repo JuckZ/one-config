@@ -1,17 +1,24 @@
-local testModule = require("test")
-local proMove = require("pro-move")
--- stackline = require "stackline"
--- skhd = require("skhd")
--- wincent = require("wincent")
+local utils = require("utils")
+local reloader = require("utils.auto-reload")
+-- local stackline = require "stackline"
+require("keyboard.yabai")
+require("pro-move")
+-- require("keyboard.hyper")
+-- require("keyboard.tmux")
+-- require("vim-mode")
 
-hs.loadSpoon("AClock")
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "C", function()
-  spoon.AClock:toggleShow()
+  utils.toggleClock()
+end)
+
+hs.hotkey.bind({"cmd",  "alt", "ctrl"}, "R", function()
+  reloader.reload()
 end)
 
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "W", function()
-  -- testModule.hsAlert()
-  testModule.nativeNotice()
+  -- utils.hsAlert()
+  utils.nativeNotice()
 end)
 
+reloader.init()
 -- stackline:init()

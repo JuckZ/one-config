@@ -4,7 +4,7 @@ local draggedWindow = nil
 local initialMousePos = nil
 local initialWindowPos = nil
 local lastMoveTime = 0
-local throttleInterval = 0.1 -- 节流时间间隔，单位为秒
+local throttleInterval = 0.2 -- 节流时间间隔，单位为秒
 local log   = hs.logger.new('query', 'info')
 
 -- 定义一个函数来打印表的内容
@@ -23,7 +23,7 @@ local function startEventTap()
     moveWindowEvent = hs.eventtap.new({hs.eventtap.event.types.rightMouseDown, hs.eventtap.event.types.rightMouseUp, hs.eventtap.event.types.rightMouseDragged}, function(event)
         local eventType = event:getType()
         log.i('-=-=-=')
-        if eventType == hs.eventtap.event.types.rightMouseDown and hs.eventtap.checkKeyboardModifiers().shift then
+        if eventType == hs.eventtap.event.types.rightMouseDown and hs.eventtap.checkKeyboardModifiers().alt then
             draggedWindow = hs.window.focusedWindow()
             if draggedWindow then
                 initialMousePos = hs.mouse.getAbsolutePosition()

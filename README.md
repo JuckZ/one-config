@@ -10,14 +10,25 @@ Config everything once.
   - [ ] 配置热重载
 - [ ] proxy从chezmoidata中获取初始值，并赋值给全局，用于各个软件
 - [ ] 软件区分必要和额外
+- [ ] zsh
+  - [ ] oh-my-zsh
+  - [ ] starship
+- [ ] vim global
+  - [ ] svim
+- [ ] lazygit
+- [ ] ranger nnn fzf
+- [ ] 翻译工具
+- [ ] zoxide
 
 ## Features
 
-1. [Rime config](https://github.com/hugh7007/xmjd6-rere)
+1. Input method - [one-input](https://github.com/JuckZ/one-input)
 2. Cross Platform(Linux, macOS, Windows)
 3. toggle self-elevate
 4. useful alias
 5. komo module
+6. [LazyVim](https://www.lazyvim.org/) for [neovim](https://neovim.io/)
+7. [Lazygit](https://github.com/jesseduffield/lazygit)
 
 ## Usage
 
