@@ -3,7 +3,7 @@
 
 ; Load library
 #Include komorebic.lib.ahk
-; #Include resize.ahk
+#Include resize.ahk
 
 ;- KOMOREBIC
 ; Ctrl - ^
@@ -11,7 +11,8 @@
 ; Shift - +
 ; Win - #
 
-; AltFocusHack("enable")
+; Reload Configuration
+!+r::Run "komorebic.exe  reload-configuration"
 
 ; Focus windows
 !h::Focus("left")
@@ -25,9 +26,9 @@
 !+[::CycleFocus("previous")
 !+]::CycleFocus("next")
 
-; !Enter::{
-;   RunWait("C:/Users/User/.cargo/bin/alacritty.exe --working-directory C:/Users/User")
-; }
+!Enter::{
+  RunWait("alacritty.exe")
+}
 
 ; Move windows
 !+Left::Move("left")
@@ -51,23 +52,27 @@
 !]::CycleStack("next")
 
 ; Resize
+; !=::ResizeAxis("horizontal", "increase")
+; !-::ResizeAxis("horizontal", "decrease")
+; !+=::ResizeAxis("vertical", "increase")
+; !+-::ResizeAxis("vertical", "decrease")
+
+; ResizeDelta 50
 !=::ResizeAxis("horizontal", "increase")
 !-::ResizeAxis("horizontal", "decrease")
-!+=::ResizeAxis("vertical", "increase")
-!+-::ResizeAxis("vertical", "decrease")
 
 ; Manipulate windows
 !t::ToggleFloat()
 !+f::ToggleMonocle()
 
 ; Window manager options
-!+r::Retile()
+; !+r::Retile()
 !p::TogglePause()
 
 ; Layouts
 !x::FlipLayout("horizontal")
 !y::FlipLayout("vertical")
-!+l::CycleLayout("next")
+; !+l::CycleLayout("next")
 
 ; Workspaces
 !1::FocusWorkspace(0)

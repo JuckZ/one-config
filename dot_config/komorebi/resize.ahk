@@ -1,9 +1,16 @@
-+RButton::
+; !+-::ResizeDelta(10)
+
+; Ctrl - ^
+; Alt - !
+; Shift - +
+; Win - #
+
+!RButton::
 {
+    CoordMode("Mouse", "Screen")
     MouseGetPos(&StartX, &StartY, &WindowID)
     WinGetPos(&WinX, &WinY, &WinWidth, &WinHeight, "ahk_id " WindowID)
     SetMouseDelay(-1)  ; Make the mouse delay instant
-    
     ; Determine where the cursor is relative to the window at the time of pressing.
     HorizontalPos := StartX - WinX
     VerticalPos := StartY - WinY
@@ -14,31 +21,38 @@
     ResizeRight := HorizontalPos >= RightDist
     ResizeBottom := VerticalPos >= BottomDist
 
-    while GetKeyState("Shift", "P") && GetKeyState("RButton", "P")
+    setted := false
+
+    while GetKeyState("Alt", "P") && GetKeyState("RButton", "P")
     {
         MouseGetPos(&CurrentX, &CurrentY)
-        NewWidth := WinWidth
-        NewHeight := WinHeight
-        NewX := WinX
-        NewY := WinY
+        deltaX := (CurrentX - StartX)
+        deltaY := (CurrentY - StartY)
+
+        if(setted = false) {
+            NewX := WinX
+            NewY := WinY
+            setted := true
+        }
 
         ; Adjust width and height based on initial side determination
         if (ResizeRight) {
-            NewWidth := Max(100, WinWidth + (CurrentX - StartX))
+            NewWidth := Max(10, WinWidth + deltaX)
         } else {
-            NewWidth := Max(100, WinWidth - (CurrentX - StartX))
-            NewX := CurrentX
+            NewWidth := Max(10, WinWidth - deltaX)
+            NewX := Max(0, (WinX + deltaX))
         }
 
         if (ResizeBottom) {
-            NewHeight := Max(100, WinHeight + (CurrentY - StartY))
+            NewHeight := Max(10, WinHeight + deltaY)
         } else {
-            NewHeight := Max(100, WinHeight - (CurrentY - StartY))
-            NewY := CurrentY
+            NewHeight := Max(10, WinHeight - deltaY)
+            NewY := Max(0, (WinY + deltaY))
         }
-
+        Sleep(50)
         ; Use WinMove to resize or move the window
         WinMove(NewX, NewY, NewWidth, NewHeight, "ahk_id " WindowID)
     }
+
     return
 }

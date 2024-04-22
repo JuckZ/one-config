@@ -18,6 +18,7 @@ $script:tempModule.SetEnv()
 function local:Start-Komorebi() {
   # Invoke-Expression -Command "komorebic start --whkd"
   # komorebic start --ffm -t=12345 --whkd
+  # komorebic watch-configuration enable
   komorebic start --ahk
 }
 

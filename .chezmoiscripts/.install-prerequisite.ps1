@@ -19,7 +19,6 @@ function local:preCheck() {
 
 # 日志工具
 function local:initLogger() {
-  Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
   Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 
   if($null -eq $(Get-Module -Name Logging -ListAvailable)) {

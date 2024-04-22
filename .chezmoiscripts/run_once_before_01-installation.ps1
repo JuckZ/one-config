@@ -1,7 +1,6 @@
 $script_name = $MyInvocation.MyCommand.Name
 
 function initLogger() {
-  Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
   Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
 
   if($null -eq $(Get-Module -Name Logging -ListAvailable)) {
@@ -51,6 +50,7 @@ function local:installApp() {
     [Application]@{Name = "age"; Version = "1.1.1"; Command = "age"; Source="extras"},
     [Application]@{Name = "bitwarden-cli"; Version = "2024.3.1"; Command = "bw"},
     [Application]@{Name = "scoop-completion"; Version = "0.3.0"; Command = ""; Source = "extras"},
+    [Application]@{Name = "everything"; Version = "1.4.1.1024"; Command = "everything"; Source = "extras"},
     [Application]@{Name = "mpv"; Version = "0.38.0"; Command = "mpv"; Source = "extras"},
     [Application]@{Name = "zoxide"; Version = "0.9.4"},
     [Application]@{Name = "fzf"; Version = "0.50.0"},
@@ -58,15 +58,18 @@ function local:installApp() {
     [Application]@{Name = "FiraCode-NF"; Source = "nerd-fonts"},
     [Application]@{Name = "JetBrainsMono-NF"; Source = "nerd-fonts"},
     [Application]@{Name = "vcredist2022"; Source = "extras"},
+    [Application]@{Name = "alacritty"; Version = "0.13.2"; Source = "extras"},
+    # [warp](https://app.warp.dev/get_warp)
     [Application]@{Name = "starship"},
     [Application]@{Name = "komorebi"; Source = "extras"},
     [Application]@{Name = "komokana"; Source = "extras"},
     [Application]@{Name = "rustup"; Command = "rustup"},
     [Application]@{Name = "python310"; Version = "3.10.0"; Source = "versions"; Command = "python"},
     [Application]@{Name = "autohotkey"; Version = "2.0.0"; Source = "extras"},
-    # install launcher
-    [Application]@{Name = "flow-launcher"; Source = "extras"}
+    # install launcher, flow-launcher, wox or Rubick?
+    [Application]@{Name = "flow-launcher"; Version = "1.17.2"; Source = "extras"}
     # [Application]@{Name = "wox"; Source = "extras"}
+    # [rubick](https://github.com/rubickCenter/rubick)
   )
 
   $scoopApps = scoop list 6> $null
@@ -74,21 +77,26 @@ function local:installApp() {
   foreach ($app in $AppList) {
     $installedApp = $scoopApps | Where-Object { $_.Name -eq $app.Name -and $_.Source -eq $app.Source }
     $str = $appInfo -split '\s+'
+    $installedVersion = $null
+    $commandInfo = $null
     if ($installedApp) {
       $installedVersion = $installedApp.Version
       if ([version]$installedVersion -lt [version]$app.Version) {
         Write-Log -Level 'INFO' -Message "$($app.Name) is installed but the version ($installedVersion) is lower than required ($($app.Version)). Updating..."
-        # scoop update $($app.Name)
+        scoop update "$($app.Source)/$($app.Name)"
       }
     } elseif(-not [string]::IsNullOrEmpty($app.Command)) {
       $commandInfo = Get-Command $app.Command -ErrorAction SilentlyContinue
-      if ([version]$commandInfo.Version -lt [version]$app.Version) {
+      if(-not $commandInfo) {
+        Write-Log -Level 'WARNING' -Message "$($app.Name) is not installed. Installing..."
+        scoop install "$($app.Source)/$($app.Name)"
+      } elseif ([version]$commandInfo.Version -lt [version]$app.Version) {
         Write-Log -Level 'ERROR' -Message "$($app.Name) is installed but the version ($installedVersion) is lower than required ($($app.Version)). Updating..."
-        # scoop update $($app.Name)
+        scoop update "$($app.Source)/$($app.Name)"
       }
     } else {
       Write-Log -Level 'WARNING' -Message "$($app.Name) is not installed. Installing..."
-      # scoop install $($app.Name)
+      scoop install "$($app.Source)/$($app.Name)"
     }
   }
 }
@@ -98,8 +106,13 @@ function local:extraInstall() {
   cd ~/Projects/yasb && pip install -r requirements.txt && cd -
 }
 
+function local:sync() {
+  chezmoi add -T ~/.config/scoop/config.json
+}
+
 addSource
 installApp
 # extraInstall
+sync
 
 Write-Host "<<< $script_name finished"

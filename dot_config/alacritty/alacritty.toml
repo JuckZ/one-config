@@ -4,6 +4,10 @@ import = [
 "~/.config/alacritty/keybindings.toml"
 ]
 
+[shell]
+  program = "pwsh"
+  args = ["-NoLogo", "-NoProfile"]
+
 [env]
 TERM = "xterm-256color"
 

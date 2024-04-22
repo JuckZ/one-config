@@ -27,6 +27,9 @@ Config everything once.
 3. toggle self-elevate
 4. useful alias
 5. komo module
+   1. Alt + RButton: resize window
+   2. Alt + LButton: move window
+   3. Alt + Shift + R: reload
 6. [LazyVim](https://www.lazyvim.org/) for [neovim](https://neovim.io/)
 7. [Lazygit](https://github.com/jesseduffield/lazygit)
 
