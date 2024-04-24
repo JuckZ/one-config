@@ -30,6 +30,7 @@
   RunWait("alacritty.exe")
 }
 
+!+q::Close()
 ; Move windows
 !+Left::Move("left")
 !+Down::Move("down")

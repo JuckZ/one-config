@@ -4,6 +4,9 @@ Config everything once.
 
 ## TODO
 
+- [ ] menubar
+  - [ ] 自己开发，使用electron学习 或者 Flutter
+  - [ ] yasb配置，wifi，以及卡顿问题和安装的便捷性问题
 - [ ] hyprland的快捷键
   - [ ] 鼠标和键盘协同resize Command + RButton
   - [ ] 任务栏、菜单栏切换
@@ -38,6 +41,8 @@ Config everything once.
 ### Installation
 
 1. Windows
+
+> 目前需手动安装字体[OneFont](https://github.com/JuckZ/one-font)，以支持yasb
 
 ```powershell
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser

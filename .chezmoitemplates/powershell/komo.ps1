@@ -22,33 +22,23 @@ function local:Start-Komorebi() {
   komorebic start --ahk
 }
 
+function local:Stop-Whkd() {
+  komorebic stop --whkd
+}
+
 function local:Stop-Komorebi() {
   komorebic stop
+  Get-Process | Where-Object {$_.ProcessName -like "*autohotkey*"} | Stop-Process
 }
 
 function local:Start-Yasb() {
   # 设置yasb Python脚本的路径
-  $yasbScriptPath = "$env:PROJECT_HOME\yasb\src\main.py" # 根据实际路径调整
-  $process = Start-Process "python" -ArgumentList "$yasbScriptPath" -PassThru -NoNewWindow
-  $yasbPid = $process.Id
-  Write-Log -Level 'INFO' -Message "Python script is running in the background. Job ID: {0}" -Arguments $yasbPid
-  # Set-Content "$env:TEMP\yasb.pid" "$yasbPid"
-  [Environment]::SetEnvironmentVariable("YASB_PID", "$yasbPid", [EnvironmentVariableTarget]::User)
+  $yasbScriptPath = "$env:PROJECT_HOME\yasb\src\main.py"
+  Start-Process "pythonw" -ArgumentList "$yasbScriptPath" -NoNewWindow
 }
 
 function local:Stop-Yasb() {
-  $yasbPid = [System.Environment]::GetEnvironmentVariable("YASB_PID", [System.EnvironmentVariableTarget]::User)
-  # $yasbPidFromFile = Get-Content "$env:TEMP\yasb.pid" -Raw
-  if ($null -ne $yasbPid) {
-    try {
-      Stop-Process -Id "$yasbPid"
-    } catch {
-        Write-Log -Level 'WARNING' -Message "Process with ID {0} does not exist." -Arguments $yasbPid
-    }
-    [Environment]::SetEnvironmentVariable("YASB_PID", $null, [EnvironmentVariableTarget]::User)
-  } else {
-    Write-Log -Level 'WARNING' -Message "Environment variable 'YASB_PID' does not exist."
-  }
+  Get-CimInstance Win32_Process | Select-Object ProcessId, Name, CommandLine | Where-Object {$_.Name -like "*python*" -and $_.CommandLine -like "*$env:PROJECT_HOME\yasb\src\main.py*"} | Stop-Process -Id {$_.ProcessId}
 }
 
 function local:Start-Kanata() {
@@ -59,7 +49,7 @@ function local:Start-Kanata() {
 
 function local:Stop-Kanata() {
   # lctl+spc+esc now terminates kanata
-  Get-Process "kanata" | Stop-Process
+  Get-Process | Where-Object {$_.ProcessName -like "*kanata*"} | Stop-Process
 }
 
 function local:Start-Komokana() {
@@ -68,7 +58,7 @@ function local:Start-Komokana() {
 }
 
 function local:Stop-Komokana() {
-  Get-Process "komokana" | Stop-Process
+  Get-Process | Where-Object {$_.ProcessName -like "*komokana*"} | Stop-Process
 }
 
 class Command {
@@ -102,29 +92,75 @@ function local:Show-Tips() {
   Write-Host "`nUse `"komo [command] --help`" for more information about a command.(not work now)"
 }
 
+function Start-Komponent {
+  param([string]$component)
+  "Starting $component"
+  switch ($component) {
+    'whkd' {
+      Start-Whkd
+    }
+    'yasb' {
+      Start-Yasb
+    }
+    Default {
+      "$component does not support!"
+    }
+  }
+}
+
+function Stop-Komponent {
+  param([string]$component)
+  "Stopping $component"
+  switch ($component) {
+    'yasb' {
+      Stop-Yasb
+    }
+    Default {
+      "$component does not support!"
+    }
+  }
+}
+
 # 创建模块并导入到全局作用域
 $KomoModule = New-Module -ScriptBlock {
   function Komo() {
     param(
       [Parameter(Mandatory=$false)]
       [ValidateSet('start', 'stop', 'help')]
-      [string]$Operation = "help"
+      [string]$Operation = "help",
+
+      [Parameter(Mandatory=$false)]
+      [string[]]$Options
     )
     
     switch ($Operation) {
       'start' {
-        Start-Kanata
-        Start-Komorebi
-        Start-Yasb
-        Start-Komokana
-        "Komo started."
+        foreach ($opt in $Options) {
+          if ($opt -match '--(.*)') {
+            Start-Komponent -component $Matches[1]
+          }
+        }
+        if(-not $Options) {
+          Start-Kanata
+          Start-Komorebi
+          Start-Yasb
+          Start-Komokana
+          "Komo started."
+        }
       }
       'stop' { 
-        Stop-Komokana
-        Stop-Yasb
-        Stop-Komorebi
-        Stop-Kanata
-        "Komo stopped."
+        foreach ($opt in $Options) {
+          if ($opt -match '--(.*)') {
+            Stop-Komponent -component $Matches[1]
+          }
+        }
+        if (-not $Options) {
+          Stop-Komokana
+          Stop-Yasb
+          Stop-Komorebi
+          Stop-Kanata
+          "Komo stopped."
+        }
       }
       'help' {
         Show-Tips

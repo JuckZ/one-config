@@ -1526,3 +1526,14 @@
   - kind: Exe
     id: ueli.exe
     matching_strategy: Equals
+- name: rubick
+  identifier:
+    kind: Exe
+    id: rubick.exe
+    matching_strategy: Equals
+  options:
+  - tray_and_multi_window
+  float_identifiers:
+  - kind: Exe
+    id: rubick.exe
+    matching_strategy: Equals

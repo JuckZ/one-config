@@ -103,7 +103,7 @@ function local:installApp() {
 
 function local:extraInstall() {
   cargo install kanata
-  cd ~/Projects/yasb && pip install -r requirements.txt && cd -
+  cd ~/Projects/yasb && pip install -r requirements.txt && pip install PyQt6 --upgrade && cd -
 }
 
 function local:sync() {

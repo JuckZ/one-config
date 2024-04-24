@@ -449,11 +449,11 @@ widgets:
         label_alt: "{wifi_icon} {wifi_name}"
         update_interval: 5000
         wifi_icons:
-          - "\udb82\udd2e"  # 0% strength (no wifi)
-          - "\udb82\udd1f"  # 1-25% strength
-          - "\udb82\udd22"  # 26-50% strength
-          - "\udb82\udd25"  # 51-75% strength
-          - "\udb82\udd28"  # 76-100% strength. Alternate theming: \uf1eb
+          - "\ueba0"  # 0% strength (no wifi)
+          - "\ueba1"  # 1-25% strength
+          - "\ueba2"  # 26-50% strength
+          - "\ueba3"  # 51-75% strength
+          - "\ueba3"  # 76-100% strength.
         callbacks:
           on_middle: "do_nothing"
           on_right: "exec cmd.exe /c start ms-settings:network"
@@ -511,10 +511,10 @@ widgets:
   kanata:
     type: "yasb.custom.CustomWidget"
     options:
-      label: "{data}"
-      label_alt: "{data}"
+      label: "\uf231 {data}"
+      label_alt: "\uf231 {data}"
       class_name: "kanata-widget"
       exec_options:
-        run_cmd: "cat '%LOCALAPPDATA%\\Temp\\kanata_layer'"
+        run_cmd: "type '%LOCALAPPDATA%\\Temp\\kanata_layer'"
         run_interval: 300
         return_format: "string"
