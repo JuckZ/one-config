@@ -1,4 +1,10 @@
-local M = {}
+local logModule = require("utils.log")
+local reloaderModule = require("utils.auto-reload")
+
+local M = {
+  log = logModule,
+  reloader = reloaderModule
+}
 
 function M.hsAlert()
   hs.alert.show("alert!")

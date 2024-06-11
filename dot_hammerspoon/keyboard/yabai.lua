@@ -9,20 +9,22 @@
 --
 -- https://github.com/koekeishiya/yabai
 
+local shared = require("shared")
+
 local function yabai(commands)
-	for _, cmd in ipairs(commands) do
-		os.execute("/usr/local/bin/yabai -m " .. cmd)
+	for _, command in ipairs(commands) do
+		os.execute("/usr/local/bin/yabai -m " .. command)
 	end
 end
 
 local function alt(key, commands)
-	hs.hotkey.bind({ "alt" }, key, function()
+	hs.hotkey.bind({ shared.altMod }, key, function()
 		yabai(commands)
 	end)
 end
 
 local function altShift(key, commands)
-	hs.hotkey.bind({ "alt", "shift" }, key, function()
+	hs.hotkey.bind({ shared.altMod, "shift" }, key, function()
 		yabai(commands)
 	end)
 end

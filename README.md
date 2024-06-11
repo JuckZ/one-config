@@ -22,6 +22,7 @@ Config everything once.
 - [ ] ranger nnn fzf
 - [ ] 翻译工具
 - [ ] zoxide
+- [ ] 同步到 https://github.com/manjaro-hyprland/desktop-settings/blob/hyprland/community/hyprland/etc/skel/.config
 
 ## Features
 
@@ -85,6 +86,12 @@ chezmoi init JuckZ/one-config
 # Example: apply my config via SSH, --apply 会覆盖原有的配置文件
 chezmoi init --ssh --depth 1 --apply JuckZ/one-config
 ```
+
+### KeyMapping
+
+keyclu, KeyCue or CheatSheet for macOS
+Keyboard Manager in PowerToys, CheatKeys for Windows
+[KeyCombiner](https://keycombiner.com/) for Linux?
 
 ## Reference
 

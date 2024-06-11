@@ -1,40 +1,34 @@
-local moveWindowEvent
+local moveWindowEvent -- 主监听器
+local dragEvent -- 拖拽过程监听器
 local isDragging = false
 local draggedWindow = nil
 local initialMousePos = nil
 local initialWindowPos = nil
 local lastMoveTime = 0
-local throttleInterval = 0.2 -- 节流时间间隔，单位为秒
-local log   = hs.logger.new('query', 'info')
+local throttleInterval = 0.05 -- 节流时间间隔，单位为秒
 
--- 定义一个函数来打印表的内容
-local function printTable(t)
-  for key, value in pairs(t) do
-      print(key, value)
-  end
+-- 清理拖拽状态
+local function cleanupDrag()
+    isDragging = false
+    draggedWindow = nil
+    initialMousePos = nil
+    initialWindowPos = nil
 end
 
-local function startEventTap()
-    if moveWindowEvent then
-        moveWindowEvent:stop()
-        moveWindowEvent = nil
+-- 启动或停止拖拽事件监听器
+local function manageDragEvent()
+    if dragEvent then
+        dragEvent:stop()
+        dragEvent = nil
     end
 
-    moveWindowEvent = hs.eventtap.new({hs.eventtap.event.types.rightMouseDown, hs.eventtap.event.types.rightMouseUp, hs.eventtap.event.types.rightMouseDragged}, function(event)
+    dragEvent = hs.eventtap.new({hs.eventtap.event.types.leftMouseDragged, hs.eventtap.event.types.leftMouseUp}, function(event)
         local eventType = event:getType()
-        log.i('-=-=-=')
-        if eventType == hs.eventtap.event.types.rightMouseDown and hs.eventtap.checkKeyboardModifiers().alt then
-            draggedWindow = hs.window.focusedWindow()
-            if draggedWindow then
-                initialMousePos = hs.mouse.getAbsolutePosition()
-                initialWindowPos = draggedWindow:frame()
-                isDragging = true
-                return true
-            end
-        elseif eventType == hs.eventtap.event.types.rightMouseDragged and isDragging then
+
+        if eventType == hs.eventtap.event.types.leftMouseDragged and isDragging then
             local currentTime = hs.timer.secondsSinceEpoch()
             if currentTime - lastMoveTime > throttleInterval then
-                local currentMousePos = hs.mouse.getAbsolutePosition()
+                local currentMousePos = hs.mouse.absolutePosition()
                 local dx = currentMousePos.x - initialMousePos.x
                 local dy = currentMousePos.y - initialMousePos.y
 
@@ -47,31 +41,36 @@ local function startEventTap()
                 lastMoveTime = currentTime
                 return true
             end
-        elseif eventType == hs.eventtap.event.types.rightMouseUp and isDragging then
-            isDragging = false
-            draggedWindow = nil
-            initialMousePos = nil
-            initialWindowPos = nil
+        elseif eventType == hs.eventtap.event.types.leftMouseUp and isDragging then
+            -- 结束拖拽
+            cleanupDrag()
             return true
         end
 
         return false
     end)
-
-    moveWindowEvent:start()
-
-    -- moveWindowEvent:stoppedCallback(function()
-    --     hs.notify.new({title="EventTap Stopped", informativeText="EventTap has been restarted automatically."}):send()
-    --     startEventTap()
-    -- end)
+    dragEvent:start()
 end
 
-startEventTap()
+-- 监听鼠标按下事件
+local function startEventTap()
+    moveWindowEvent = hs.eventtap.new({hs.eventtap.event.types.leftMouseDown}, function(event)
+        local modifiers = event:getFlags()
+        if modifiers.alt then
+            draggedWindow = hs.window.focusedWindow()
+            if draggedWindow then
+                initialMousePos = hs.mouse.absolutePosition()
+                initialWindowPos = draggedWindow:frame()
+                isDragging = true
+                manageDragEvent()
+                return true
+            end
+        end
+        return false
+    end)
+    moveWindowEvent:start()
+end
 
-local checkTimer = hs.timer.new(5, function()
-    if not moveWindowEvent:isEnabled() then
-        hs.notify.new({title="EventTap Not Running", informativeText="Restarting EventTap"}):send()
-        startEventTap()
-    end
-end)
-checkTimer:start()
+return {
+    init = startEventTap
+}
