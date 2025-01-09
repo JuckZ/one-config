@@ -46,8 +46,15 @@ function local:installApp() {
   }
 
   $AppList = @(
+    [Application]@{Name = "notepadplusplus"; Version = "8.6.7"; Command = "notepadp++"; Source = "extras"},
+    [Application]@{Name = "winsw"; Version = "2.12.0"; Command = "winsw"; Source = "main"},
+    [Application]@{Name = "sing-box"; Version = "1.8.13"; Command = "sing-box"; Source = "main"},
+    [Application]@{Name = "pnpm"; Version = "8.6.2"; Command = "pnpm"; Source = "main"},
     [Application]@{Name = "autohotkey"; Version = "2.0.12"; Command = "autohotkey"; Source="extras"},
     [Application]@{Name = "age"; Version = "1.1.1"; Command = "age"; Source="extras"},
+    # [Application]@{Name = "openssl"; Version = "3.3.0"; Source="main"},
+    [Application]@{Name = "openssl-light"; Version = "3.3.0"; Source="versions"},
+    [Application]@{Name = "bitwarden"; Version = "2024.5.0"; Source="extras"},
     [Application]@{Name = "bitwarden-cli"; Version = "2024.3.1"; Command = "bw"},
     [Application]@{Name = "scoop-completion"; Version = "0.3.0"; Command = ""; Source = "extras"},
     [Application]@{Name = "everything"; Version = "1.4.1.1024"; Command = "everything"; Source = "extras"},

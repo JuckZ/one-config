@@ -8,6 +8,10 @@ docs/**
 .vscode/**
 key.txt.age
 .wakatime.cfg
+**/Rime/build/**
+**/Rime/installation.yaml
+**/Rime/user.yaml
+**/yasb/**/__pycache__
 
 {{- if ne .encrypt true }}
 .private # ignore the private file

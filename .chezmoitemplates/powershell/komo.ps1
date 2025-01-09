@@ -28,6 +28,7 @@ function local:Stop-Whkd() {
 
 function local:Stop-Komorebi() {
   komorebic stop
+  Get-Process | Where-Object {$_.ProcessName -like "*komorebi*"} | Stop-Process
   Get-Process | Where-Object {$_.ProcessName -like "*autohotkey*"} | Stop-Process
 }
 
@@ -121,7 +122,7 @@ function Stop-Komponent {
   }
 }
 
-# 创建模块并导入到全局作用域
+# 创建模块并导入到全局作用域(中文注释很有可能导致代码块报错，因此加一个英文分号结尾);
 $KomoModule = New-Module -ScriptBlock {
   function Komo() {
     param(

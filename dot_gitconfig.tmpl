@@ -3,11 +3,32 @@
 	email = {{ .email | quote }}
 [safe]
 	directory = D:/
+[credential]
+	helper = store
 [http]
 	postBuffer = 1572864000
+[http "https://github.com"]
+	proxy = http://localhost:7890
+	sslVerify = false
 [pull]
 	rebase = true
 [init]
 	defaultBranch = main
 [core]
+	safecrlf = true
+{{- if eq .chezmoi.os "windows" }}
 	autocrlf = input
+{{- else }}
+	autocrlf = input
+{{- end }}
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[alias]
+	last = log -1
+	co = checkout
+	ci = commit
+	br = branch
+	st = status

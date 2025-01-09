@@ -1,0 +1,10 @@
+<service>
+  <id>sing-box</id>
+  <name>sing-box</name>
+  <description>This service runs sing-box.</description>
+  <download from="https://你的订阅链接" to="%BASE%\config.json" auth="sspi" />
+  <executable>C:\Users\homin\scoop\shims\sing-box.exe</executable>
+  <arguments>run</arguments>
+  <log mode="reset" />
+  <onfailure action="restart" />
+</service>

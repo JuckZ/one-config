@@ -26,14 +26,6 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
-    exclude = ["*/__pycache__/**"]
-["AppData/Roaming/Rime"]
-    type = "archive"
-    url = "https://github.com/hugh7007/xmjd6-rere/archive/refs/heads/main.zip"
-    # url = "https://github.com/hugh7007/xmjd6-rere/releases/download/20240412/xmjd6.zip"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "168h"
 {{- else if eq .chezmoi.os "darwin" }}
 ["Library/Rime"]
     type = "archive"

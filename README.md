@@ -4,6 +4,7 @@ Config everything once.
 
 ## TODO
 
+- [ ] github 代码审查，避免信息泄露
 - [ ] menubar
   - [ ] 自己开发，使用electron学习 或者 Flutter
   - [ ] yasb配置，wifi，以及卡顿问题和安装的便捷性问题
@@ -23,6 +24,8 @@ Config everything once.
 - [ ] 翻译工具
 - [ ] zoxide
 - [ ] 同步到 https://github.com/manjaro-hyprland/desktop-settings/blob/hyprland/community/hyprland/etc/skel/.config
+- [ ] winsw 测试
+- [ ] win-get notfound，增加path `%USERPROFILE%\AppData\Local\Microsoft\WindowsApps`
 
 ## Features
 
@@ -52,6 +55,38 @@ iwr -useb get.scoop.sh | iex
 # winget list --name PowerShell --upgrade-available
 scoop install chezmoi
 ```
+
+其他可选软件
+scoop install maven@3.6.1
+scoop install maven@3.6.3
+scoop install nodejs@14.17.0
+scoop install sing-box
+scoop install extras/v2rayn
+scoop install extras/ventoy
+scoop install main/scrcpy
+scoop install main/sndcpy
+scoop install extras/qtscrcpy
+scoop install adb
+scoop install just
+scoop install extras/vlc
+scoop install main/poetry
+
+scoop install extras/motrix
+scoop install main/kubectl
+
+
+Spacedesk
+
+AirServer
+Reflector
+QuickTime Player
+wormhole
+AirDroid Cast
+
+1. 截图软件
+
+- scoop install extras/screentogif
+- scoop install extras/sharex
 
 2. Manjaro/Archlinux
 

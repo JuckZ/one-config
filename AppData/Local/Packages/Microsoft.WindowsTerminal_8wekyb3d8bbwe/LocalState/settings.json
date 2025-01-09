@@ -16,6 +16,10 @@
             "keys": "ctrl+v"
         },
         {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -23,10 +27,6 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
         }
     ],
     "copyFormatting": "none",
@@ -40,15 +40,17 @@
     ],
     "profiles": 
     {
-        "defaults": {
-            "useAcrylic": true,
-            "opacity": 90,
+        "defaults": 
+        {
             "cursorShape": "bar",
-            "snapOnInput": true,
-            "font": {
+            "font": 
+            {
                 "fontFace": "FiraCode Nerd Font",
-                "size": 12
-            }
+                "size": 12.0
+            },
+            "opacity": 90,
+            "snapOnInput": true,
+            "useAcrylic": true
         },
         "list": 
         [
@@ -87,6 +89,12 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{8ab8e6f6-35c6-5b46-8419-3e1568105476}",
+                "hidden": false,
+                "name": "podman-machine-default",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },

@@ -12,7 +12,7 @@
 ; Win - #
 
 ; Reload Configuration
-!+r::Run "komorebic.exe  reload-configuration"
+!+r::ReloadConfiguration()
 
 ; Focus windows
 !h::Focus("left")
@@ -31,6 +31,7 @@
 }
 
 !+q::Close()
+!+s::TogglePause()
 ; Move windows
 !+Left::Move("left")
 !+Down::Move("down")
@@ -44,27 +45,33 @@
 
 ; Stack windows
 ; TODO
-; !Left::Stack("left")
-; !Right::Stack("right")
-; !Up::Stack("up")
-; !Down::Stack("down")
-!;::Unstack()
+^!h::Stack("left")
+^!l::Stack("right")
+^!k::Stack("up")
+^!j::Stack("down")
+^!Left::Stack("left")
+^!Right::Stack("right")
+^!Up::Stack("up")
+^!Down::Stack("down")
+!U::Unstack()
 ![::CycleStack("previous")
 !]::CycleStack("next")
 
-; Resize
-; !=::ResizeAxis("horizontal", "increase")
-; !-::ResizeAxis("horizontal", "decrease")
-; !+=::ResizeAxis("vertical", "increase")
-; !+-::ResizeAxis("vertical", "decrease")
+; !;::Unstack()
+; ![::CycleStack("previous")
+; !]::CycleStack("next")
 
-; ResizeDelta 50
+; Resize (default ResizeDelta is 50)
 !=::ResizeAxis("horizontal", "increase")
 !-::ResizeAxis("horizontal", "decrease")
+!+=::ResizeAxis("vertical", "increase")
+!+-::ResizeAxis("vertical", "decrease")
 
 ; Manipulate windows
-!t::ToggleFloat()
-!+f::ToggleMonocle()
+~!+f::ToggleFloat()
+!f::ToggleMaximize()
+!m::Minimize()
+!+m::ToggleMonocle()
 
 ; Window manager options
 ; !+r::Retile()
@@ -75,7 +82,7 @@
 !y::FlipLayout("vertical")
 ; !+l::CycleLayout("next")
 
-; Workspaces
+; Workspaces // FocusWorkspaces FocusWorkspace
 !1::FocusWorkspace(0)
 !2::FocusWorkspace(1)
 !3::FocusWorkspace(2)
@@ -101,3 +108,6 @@
 
 ; Caps lock as Esc
 ; Capslock::Esc
+
+; EnableAutostart
+; DisableAutostart

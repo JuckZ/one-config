@@ -994,6 +994,9 @@
   options:
   - tray_and_multi_window
   float_identifiers:
+  - kind: Exe
+    id: QQ.exe
+    matching_strategy: Equals
   - kind: Title
     id: 图片查看器
     matching_strategy: Legacy
