@@ -113,3 +113,8 @@ if (Test-IsInteractive) {
 
   . (Join-Path -Path (Split-Path -Path $PROFILE) -ChildPath 'starship.ps1')
 }
+
+# auto completion for sing-box ---start
+$completionScript = sing-box completion powershell | Out-String
+Invoke-Expression -Command $completionScript
+# auto completion for sing-box ---end

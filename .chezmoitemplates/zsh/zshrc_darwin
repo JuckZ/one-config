@@ -60,3 +60,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 source <(kubectl completion zsh)
+source <(helm completion zsh)
+source <(sing-box completion zsh)
