@@ -1,0 +1,53 @@
+# growthbook @growthbook/mcp
+GB_API_KEY=
+GB_API_URL=
+GB_APP_ORIGIN=
+GB_USER=
+
+# yunxiao alibabacloud-devops-mcp-server
+YUNXIAO_ACCESS_TOKEN=
+
+# lark @larksuiteoapi/lark-mcp
+APP_ID=
+APP_SECRET=
+USER_ACCESS_TOKEN=
+# LARK_TOOLS=a.b.c,a.c.d
+# LARK_DOMAIN=https://open.feishu.cn
+# LARK_TOKEN_MODE=user_access_token
+
+# feishuproj mcp-feishu-proj
+FS_PROJ_PROJECT_KEY=your_project_key
+FS_PROJ_USER_KEY=your_user_key
+FS_PROJ_PLUGIN_ID=your_plugin_id
+FS_PROJ_PLUGIN_SECRET=your_plugin_secret
+
+# feishu-project feishu-project-mcp
+
+FEISHU_APP_ID=your_app_id
+FEISHU_APP_SECRET=your_app_secret
+FEISHU_API_URL=https://project.feishu.cn/open_api
+
+# figma figma-developer-mcp
+FIGMA_API_KEY=
+
+# mysql mcp_server_mysql
+MYSQL_HOST=
+MYSQL_PORT=
+MYSQL_USER=
+MYSQL_PASS=
+MYSQL_DB=
+
+# github @modelcontextprotocol/server-github
+GITHUB_PERSONAL_ACCESS_TOKEN=
+
+# proxmox proxmox_mcp.server
+PYTHONPATH="C:\\Users\\ajuck\\App\\ProxmoxMCP\\src"
+PROXMOX_MCP_CONFIG="C:\\Users\\ajuck\\App\\ProxmoxMCP\\proxmox-config\\config.json"
+PROXMOX_HOST=
+PROXMOX_USER="root@pam"
+PROXMOX_TOKEN_NAME=
+PROXMOX_TOKEN_VALUE=
+PROXMOX_PORT="8006"
+PROXMOX_VERIFY_SSL="false"
+PROXMOX_SERVICE="PVE"
+LOG_LEVEL="DEBUG"

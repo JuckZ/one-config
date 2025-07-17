@@ -1,0 +1,193 @@
+{
+  "mcpServers": {
+    "amap-maps-streamableHTTP": {
+      "url": "https://mcp.amap.com/mcp?key=your_webapp_key"
+    },
+    "amap-amap-sse": {
+      "url": "https://mcp.amap.com/sse?key=your_webapp_key"
+    },
+    "growthbook": {
+      "command": "npx",
+      "args": ["-y", "@growthbook/mcp"]
+    },
+    "proxmox": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- C:\\Users\\ajuck\\App\\ProxmoxMCP\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "proxmox_mcp.server"],
+      "cwd": "C:\\Users\\ajuck\\App\\ProxmoxMCP"
+    },
+    "review-gate-v2": {
+      "args": [
+        "C:\\Users\\ajuck\\cursor-extensions\\review-gate-v2\\review_gate_v2_mcp.py"
+      ],
+      "command": "C:\\Users\\ajuck\\cursor-extensions\\review-gate-v2\\venv\\Scripts\\python.exe",
+      "env": {
+        "PYTHONPATH": "C:\\Users\\ajuck\\cursor-extensions\\review-gate-v2",
+        "PYTHONUNBUFFERED": "1",
+        "REVIEW_GATE_MODE": "cursor_integration"
+      }
+    },
+    "yunxiao": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "alibabacloud-devops-mcp-server"],
+      "disabled": true
+    },
+    "lark": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": [
+        "-y",
+        "@larksuiteoapi/lark-mcp@beta",
+        "mcp"
+      ]
+    },
+    "feishuproj": {
+      "command": "uvx",
+      "args": ["mcp-feishu-proj@latest", "--transport", "stdio"]
+    },
+    "feishu-project": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "feishu-project-mcp@latest"],
+      "disabled": true,
+      "alwaysAllow": [
+        "health",
+        "health.components",
+        "health.integrations",
+        "health.tasks",
+        "health.memory",
+        "feishu.projects",
+        "feishu.requirements",
+        "feishu.bugs",
+        "task.create",
+        "task.get",
+        "mode.analyze",
+        "mode.implement"
+      ]
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "context7-local": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "@21st-dev/magic": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "@21st-dev/magic@latest", "API_KEY=\"your-api-key\""]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--browser",
+        "chrome",
+        "--image-responses",
+        "auto"
+      ],
+      "env": {
+        "DEBUG": "pw:*"
+      }
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "markitdown": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "markitdown-mcp:latest"]
+    },
+    "mermaid": {
+      "command": "npx",
+      "args": ["-y @peng-shawn/mermaid-mcp-server"],
+      "comment": "节省token，且可以转换为excalidraw"
+    },
+    "excalidraw": {
+      "command": "npx",
+      "args": ["-y", "excalidraw-mcp"],
+      "comment": "非常耗费token，且效果不佳"
+    },
+    "figma": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "figma-developer-mcp", "--stdio"],
+      "env": {
+        "PORT": 3334
+      }
+    },
+    "jetbrains": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["@jetbrains/mcp-proxy"],
+      "env": {
+        "LOG_ENABLED": "true"
+      }
+    },
+    "obsidian": {
+      "command": "cmd /c dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "obsidian-mcp", "C:\\Users\\ajuck\\Projects\\one-blog"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "json": {
+      "command": "npm exec",
+      "args": ["@gongrzhe/server-json-mcp@1.0.3"]
+    },
+    "fetch": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "@kazuph/mcp-fetch"]
+    },
+    "mysql": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "@benborla29/mcp-server-mysql"]
+    },
+    "github": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    },
+    "git": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--mount",
+        "type=bind,src=C:\\Users\\ajuck\\Projects\\tea-shop-fe,dst=/projects/tea-shop-fe",
+        "mcp/git"
+      ]
+    },
+    "everything": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": ["-y", "@modelcontextprotocol/server-everything"]
+    },
+    "filesystem-docker": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "--mount",
+        "type=bind,src=C:\\Users\\ajuck\\Projects\\tea-shop-fe\\mcp,dst=/projects/mcp",
+        "mcp/filesystem",
+        "/projects"
+      ]
+    },
+    "filesystem": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\ajuck\\Projects\\tea-shop-fe\\mcp"
+      ]
+    },
+    "weather": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\ajuck\\Projects\\tea-shop-fe\\mcp\\weather-server-typescript\\build\\index.js"
+      ]
+    },
+    "openapi-supplier-api": {
+      "command": "dotenvx run --overload -f .cursor/.env -f .cursor/.env.local -- npx",
+      "args": [
+        "-y",
+        "openapi-mcp-server",
+        "C:\\Users\\ajuck\\Projects\\tea-shop-fe\\openapi\\teashop_supplier\\api-docs.json"
+      ]
+    }
+  }
+}
