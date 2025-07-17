@@ -49,7 +49,7 @@ function local:installApp() {
     [Application]@{Name = "notepadplusplus"; Version = "8.6.7"; Command = "notepadp++"; Source = "extras"},
     [Application]@{Name = "winsw"; Version = "2.12.0"; Command = "winsw"; Source = "main"},
     [Application]@{Name = "sing-box"; Version = "1.8.13"; Command = "sing-box"; Source = "main"},
-    [Application]@{Name = "pnpm"; Version = "8.6.2"; Command = "pnpm"; Source = "main"},
+    # [Application]@{Name = "pnpm"; Version = "8.6.2"; Command = "pnpm"; Source = "main"},
     [Application]@{Name = "autohotkey"; Version = "2.0.12"; Command = "autohotkey"; Source="extras"},
     [Application]@{Name = "age"; Version = "1.1.1"; Command = "age"; Source="extras"},
     # [Application]@{Name = "openssl"; Version = "3.3.0"; Source="main"},

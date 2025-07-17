@@ -1,4 +1,5 @@
 Import-Module "$($(Get-Item $(Get-Command scoop).Path).Directory.Parent.FullName)\modules\scoop-completion" -ErrorAction SilentlyContinue
+fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
 
 # toggle self-elevate
 function toggleSelfElevate {

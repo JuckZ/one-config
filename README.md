@@ -54,12 +54,26 @@ winget install --id Microsoft.Powershell --source winget
 iwr -useb get.scoop.sh | iex
 # winget list --name PowerShell --upgrade-available
 scoop install chezmoi
+# Download and install fnm:
+winget install Schniz.fnm
+# Add the following to the end of your profile file:(https://github.com/Schniz/fnm#shell-setup)
+fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
+# fnm ships its completions with the binary:
+# fnm completions --shell powershell
+# Download and install Node.js:
+fnm install 22
+# Verify the Node.js version:
+node -v # Should print "v22.14.0".
+# Download and install pnpm:
+corepack enable pnpm
+# corepack install --global yarn@x.y.z 
+# Verify pnpm version:
+pnpm -v
 ```
 
 其他可选软件
 scoop install maven@3.6.1
 scoop install maven@3.6.3
-scoop install nodejs@14.17.0
 scoop install sing-box
 scoop install extras/v2rayn
 scoop install extras/ventoy
@@ -69,6 +83,7 @@ scoop install extras/qtscrcpy
 scoop install adb
 scoop install just
 scoop install extras/vlc
+scoop install extras/kando
 scoop install main/poetry
 
 scoop install extras/motrix
